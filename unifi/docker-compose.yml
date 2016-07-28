@@ -1,0 +1,27 @@
+version: '2'
+services:
+  unifi:
+    build: unifi
+    restart: always
+    volumes:
+     - /data/unifi:/usr/lib/unifi/data
+    network_mode: "host"
+    ports:
+     - 8443:8443/tcp
+     - 8880:8880/tcp
+     - 8843:8843/tcp
+     - 8080:8080/tcp
+  unifi-video:
+    build: unifi-video-3.1.x
+    restart: always
+    volumes:
+     - /data/unifi-video:/var/lib/unifi-video
+     - /data/unifi-video/cache:/var/cache/unifi-video
+    network_mode: "host"
+    ports:
+     - 7443:7443/tcp
+     - 7080:7080/tcp
+     - 7447:7447/tcp
+     - 7446:7446/tcp
+     - 7445:7445/tcp
+     - 6666:6666/tcp
