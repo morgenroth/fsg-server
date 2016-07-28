@@ -1,0 +1,67 @@
+version: '2'
+services:
+  admin:
+    build: admin
+    ports:
+     - 22:1221/tcp
+    links:
+     - dns:dns
+     - mysql:mysql
+     - web:web
+     - radius:radius
+     - tftpboot:tftpboot
+    volumes:
+     - /root:/root
+     - /etc/ssh/sshd_config:/etc/ssh/sshd_config:ro
+     - /data:/data
+  dns:
+    build: bind
+    dns: 127.0.0.1
+    ports:
+     - 53:53/udp
+     - 53:53/tcp
+    volumes:
+      - /data/bind/var:/var/lib/bind
+      - /data/bind/etc:/etc/bind:ro
+  radius:
+    build: radius
+    restart: always
+    volumes:
+     - /data/radius/etc:/etc/freeradius:ro
+    ports:
+     - 1812:1812/udp
+     - 1813:1813/udp
+     - 1814:1814/udp
+     - 18120:18120/udp
+    links:
+     - mysql:mysql
+  tftpboot:
+    build: tftpboot
+    restart: always
+    ports:
+     - 69:69/udp
+    volumes:
+     - /data/tftpboot:/var/lib/tftpboot:ro
+  mysql:
+    image: mysql:5.5
+    restart: always
+    ports:
+     - 3306:3306/tcp
+    volumes:
+     - /data/mysql/db:/var/lib/mysql
+  web:
+    build: nginx
+    ports:
+     - 80:80/tcp
+     - 443:443/tcp
+    volumes:
+     - /data/nginx/sites:/etc/nginx/sites-enabled:ro
+     - /data/web/sites:/data/sites
+    links:
+     - mysql:mysql
+     - jenkins:jenkins
+  jenkins:
+    image: jenkins
+    restart: always
+    volumes:
+     - /data/jenkins:/var/jenkins_home
