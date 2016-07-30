@@ -3,7 +3,7 @@ services:
   admin:
     build: admin
     ports:
-     - 22:1221/tcp
+     - 10.10.1.10:1221:22/tcp
     links:
      - dns:dns
      - mysql:mysql
@@ -18,8 +18,8 @@ services:
     build: bind
     dns: 127.0.0.1
     ports:
-     - 53:53/udp
-     - 53:53/tcp
+     - 10.10.10.10:53:53/udp
+     - 10.10.10.10:53:53/tcp
     volumes:
       - /data/bind/var:/var/lib/bind
       - /data/bind/etc:/etc/bind:ro
@@ -29,31 +29,29 @@ services:
     volumes:
      - /data/radius/etc:/etc/freeradius:ro
     ports:
-     - 1812:1812/udp
-     - 1813:1813/udp
-     - 1814:1814/udp
-     - 18120:18120/udp
+     - 10.10.10.10:1812:1812/udp
+     - 10.10.10.10:1813:1813/udp
+     - 10.10.10.10:1814:1814/udp
+     - 10.10.10.10:18120:18120/udp
     links:
      - mysql:mysql
   tftpboot:
     build: tftpboot
     restart: always
     ports:
-     - 69:69/udp
+     - 10.10.1.10:69:69/udp
     volumes:
      - /data/tftpboot:/var/lib/tftpboot:ro
   mysql:
     image: mysql:5.5
     restart: always
-    ports:
-     - 3306:3306/tcp
     volumes:
      - /data/mysql/db:/var/lib/mysql
   web:
     build: nginx
     ports:
-     - 80:80/tcp
-     - 443:443/tcp
+     - 10.10.10.10:80:80/tcp
+     - 10.10.10.10:443:443/tcp
     volumes:
      - /data/nginx/sites:/etc/nginx/sites-enabled:ro
      - /data/web/sites:/data/sites
