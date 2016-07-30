@@ -28,6 +28,9 @@ services:
     restart: always
     volumes:
      - /data/radius/etc:/etc/freeradius:ro
+     - /data/radius/python:/data/radius-python:ro
+    environment:
+     - PYTHONPATH=/data/radius-python
     ports:
      - 10.10.10.10:1812:1812/udp
      - 10.10.10.10:1813:1813/udp

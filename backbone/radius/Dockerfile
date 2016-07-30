@@ -13,6 +13,9 @@ RUN apt-get -qq update && DEBIAN_FRONTEND=noninteractive apt-get install -yqq ca
 # install radius plugins support
 RUN DEBIAN_FRONTEND=noninteractive apt-get install -yqq freeradius-ldap freeradius-mysql
 
+# install python support
+RUN EBIAN_FRONTEND=noninteractive apt-get install -yqq python python-simplejson python-httplib2 python-mysqldb
+
 # finally clean the container
 RUN apt-get -qq update && \
     apt-get upgrade -yqq && \
