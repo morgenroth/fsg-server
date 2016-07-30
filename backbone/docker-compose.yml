@@ -2,6 +2,7 @@ version: '2'
 services:
   admin:
     build: admin
+    restart: always
     ports:
      - 10.10.1.10:1221:22/tcp
     links:
@@ -16,6 +17,7 @@ services:
      - /data:/data
   dns:
     build: bind
+    restart: always
     dns: 127.0.0.1
     ports:
      - 10.10.10.10:53:53/udp
@@ -58,6 +60,7 @@ services:
      - /data/mysql/db:/var/lib/mysql
   web:
     build: nginx
+    restart: always
     ports:
      - 10.10.10.10:80:80/tcp
      - 10.10.10.10:443:443/tcp
