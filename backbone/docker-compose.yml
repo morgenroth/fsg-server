@@ -56,6 +56,7 @@ services:
      - 10.10.10.10:80:80/tcp
      - 10.10.10.10:443:443/tcp
     volumes:
+     - /data/nginx/ssl:/data/ssl:ro
      - /data/nginx/sites:/etc/nginx/sites-enabled:ro
      - /data/web:/data/sites
     links:
