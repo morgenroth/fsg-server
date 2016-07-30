@@ -1,5 +1,5 @@
 # derived from latest debian
-FROM debian:latest
+FROM ubuntu:latest
 
 # Add Tini
 ENV TINI_VERSION v0.9.0
