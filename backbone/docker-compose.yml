@@ -38,6 +38,12 @@ services:
      - 10.10.10.10:18120:18120/udp
     links:
      - mysql:mysql
+  dhcp:
+    image: networkboot/dhcpd
+    restart: always
+    volumes:
+     - /data/dhcp:/data
+    network_mode: "host"
   tftpboot:
     build: tftpboot
     restart: always
