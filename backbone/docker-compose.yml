@@ -76,6 +76,9 @@ services:
     restart: always
     ports:
      - 10.10.10.10:25:25/tcp
+    volumes:
+     - /data/mail/spool:/var/spool/mail
+     - /data/mail/logs:/var/log
     environment:
      - RELAY_HOST_NAME=stella.event.formulastudent.de
      - ACCEPTED_NETWORKS=10.10.0.0/16
