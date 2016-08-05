@@ -68,7 +68,7 @@ services:
      - ${PUBLIC_IP}:443:443/tcp
     volumes:
      - /data/nginx/ssl:/data/ssl:ro
-     - /data/nginx/sites:/etc/nginx/sites-enabled:ro
+     - /data/nginx/sites:/etc/nginx/conf.d:ro
      - /data/web:/data/sites
     links:
      - mysql:mysql

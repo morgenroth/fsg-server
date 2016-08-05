@@ -7,8 +7,12 @@ ADD https://github.com/krallin/tini/releases/download/${TINI_VERSION}/tini /tini
 RUN chmod +x /tini
 ENTRYPOINT ["/tini", "--"]
 
+# add repository
+ADD nginx.list /etc/apt/sources.list.d/100-nginx.list
+RUN apt-key adv --keyserver keyserver.ubuntu.com --recv-keys ABF5BD827BD9BF62
+
 # install packages
-RUN apt-get update && apt-get install -y supervisor nginx php5-fpm php5-mysql php5-mcrypt php5-gd php5-memcached php5-curl
+RUN apt-get update && apt-get install --force-yes -y supervisor nginx php5-fpm php5-mysql php5-mcrypt php5-gd php5-memcached php5-curl
 
 # create necessary folders
 RUN mkdir -p /var/log/supervisor /etc/nginx /var/run/php5-fpm
