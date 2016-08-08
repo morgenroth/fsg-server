@@ -7,7 +7,7 @@ services:
      - /data/unifi:/usr/lib/unifi/data
     networks:
       manage:
-        ipv4_address: 10.10.10.11
+        ipv4_address: 10.10.3.11
 
 networks:
   manage:
