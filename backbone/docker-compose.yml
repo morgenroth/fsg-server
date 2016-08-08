@@ -96,3 +96,11 @@ services:
     restart: always
     volumes:
      - /data/jenkins:/var/jenkins_home
+  cups:
+    build: cups
+    restart: always
+    ports:
+     - 10.10.10.10:631:631/tcp
+    volumes:
+     - /data/cups/config:/var/cups_config
+     - /data/cups/driver:/var/cups_driver
