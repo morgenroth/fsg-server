@@ -20,6 +20,9 @@ RUN mkdir -p /var/log/supervisor /etc/nginx /var/run/php5-fpm
 # Disable daemon mode of nginx
 RUN sed -i 's/worker_processes 4;/worker_processes 4;\ndaemon off;/g' /etc/nginx/nginx.conf
 
+# Set nginx user to www-data
+RUN sed -i 's/user  nginx;/user  www-data;/g' /etc/nginx/nginx.conf
+
 # Set php timezone
 RUN sed -i 's/;date.timezone =/date.timezone = Europe\/Berlin/g' /etc/php5/fpm/php.ini
 
