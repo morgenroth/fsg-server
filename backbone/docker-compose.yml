@@ -105,3 +105,6 @@ services:
     volumes:
      - /data/cups/config:/var/cups_config
      - /data/cups/driver:/var/cups_driver
+    environment:
+     - CUPS_ADMIN=${CUPS_USER}
+     - CUPS_PASSWD=${CUPS_PASSWORD}
