@@ -69,6 +69,7 @@ services:
     volumes:
      - /data/nginx/ssl:/data/ssl:ro
      - /data/nginx/sites:/etc/nginx/conf.d:ro
+     - /data/nginx/logs:/var/log:rw
      - /data/web:/data/sites
     links:
      - mysql:mysql
