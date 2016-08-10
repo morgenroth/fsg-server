@@ -1,30 +1,5 @@
 version: '2'
 services:
-  admin:
-    build: admin
-    restart: always
-    ports:
-     - 10.10.1.10:1221:22/tcp
-    links:
-     - dns:dns
-     - mysql:mysql
-     - web:web
-     - radius:radius
-     - tftpboot:tftpboot
-    volumes:
-     - /root:/root
-     - /etc/ssh/sshd_config:/etc/ssh/sshd_config:ro
-     - /data:/data
-  dns:
-    build: bind
-    restart: always
-    dns: 127.0.0.1
-    ports:
-     - 10.10.10.10:53:53/udp
-     - 10.10.10.10:53:53/tcp
-    volumes:
-      - /data/bind/var:/var/lib/bind
-      - /data/bind/etc:/etc/bind:ro
   radius:
     build: radius
     restart: always
@@ -40,12 +15,6 @@ services:
      - 10.10.10.10:18120:18120/udp
     links:
      - mysql:mysql
-  dhcp:
-    image: networkboot/dhcpd
-    restart: always
-    volumes:
-     - /data/dhcp:/data
-    network_mode: "host"
   tftpboot:
     build: tftpboot
     restart: always

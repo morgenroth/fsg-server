@@ -1,0 +1,19 @@
+version: '2'
+services:
+  dns:
+    build: bind
+    restart: always
+    dns: 127.0.0.1
+    network_mode: "host"
+    ports:
+     - 53:53/udp
+     - 53:53/tcp
+    volumes:
+      - /data/bind/var:/var/lib/bind
+      - /data/bind/etc:/etc/bind:ro
+  dhcp:
+    image: networkboot/dhcpd
+    restart: always
+    volumes:
+     - /data/dhcp:/data
+    network_mode: "host"
