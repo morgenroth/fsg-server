@@ -43,6 +43,7 @@ services:
     links:
      - mysql:mysql
      - jenkins:jenkins
+     - unifi:unifi
   mail:
     image: lits/docker-mail-relay
     restart: always
@@ -77,3 +78,18 @@ services:
     environment:
      - CUPS_ADMIN=${CUPS_USER}
      - CUPS_PASSWD=${CUPS_PASSWORD}
+  unifi:
+    build: unifi
+    restart: always
+    volumes:
+     - /data/unifi:/usr/lib/unifi/data
+    networks:
+      manage:
+        ipv4_address: 10.10.3.11
+      default:
+
+networks:
+  default:
+    driver: bridge
+  manage:
+    external: true
