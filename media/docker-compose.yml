@@ -6,5 +6,5 @@ services:
     volumes:
      - /data/screenly/data:/screenlydata/data
     ports:
-     - 8080:8080/tcp
-     - 9000:9000/tcp
+     - 10.10.10.10:8080:8080/tcp
+     - 10.10.10.10:9000:9000/tcp
