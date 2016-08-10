@@ -1,5 +1,13 @@
 version: '2'
 services:
+  syslog:
+    image: bobrik/syslog-ng
+    restart: always
+    volumes:
+     - /data/syslog:/var/log/syslog-ng
+    ports:
+     - 10.10.10.10:514:514/udp
+     - 10.10.10.10:514:514/tcp
   radius:
     build: radius
     restart: always
