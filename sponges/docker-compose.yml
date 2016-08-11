@@ -1,0 +1,28 @@
+version: '2'
+services:
+  sponge-manage:
+    build: arpsponge
+    restart: always
+    network_mode: host
+    command: /usr/local/sbin/arpsponge --verbose 10.10.0.0/16 dev manage0
+  sponge-staff:
+    build: arpsponge
+    restart: always
+    network_mode: host
+    command: /usr/local/sbin/arpsponge --verbose 10.102.0.0/16 dev vlan102
+  sponge-guest:
+    build: arpsponge
+    restart: always
+    network_mode: host
+    command: /usr/local/sbin/arpsponge --verbose 10.103.0.0/16 dev vlan103
+  sponge-sponsors:
+    build: arpsponge
+    restart: always
+    network_mode: host
+    command: /usr/local/sbin/arpsponge --verbose 10.104.0.0/16 dev vlan104
+  sponge-tk:
+    build: arpsponge
+    restart: always
+    network_mode: host
+    command: /usr/local/sbin/arpsponge --verbose 10.105.0.0/16 dev vlan105
+
