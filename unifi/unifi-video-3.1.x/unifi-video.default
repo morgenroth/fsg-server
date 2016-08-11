@@ -1,2 +1,0 @@
-#JSVC_EXTRA_OPTS="-nodetach -wait 40"
-ENABLE_TMPFS=no
