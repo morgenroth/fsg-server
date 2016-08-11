@@ -63,7 +63,7 @@ services:
      - /data/mail/logs:/var/log
     environment:
      - RELAY_HOST_NAME=stella.event.formulastudent.de
-     - ACCEPTED_NETWORKS=10.10.0.0/16
+     - ACCEPTED_NETWORKS=10.10.0.0/16 172.16.0.0/12
      - EXT_RELAY_HOST=${SMTP_HOST}
      - EXT_RELAY_PORT=25
      - SMTP_LOGIN=${SMTP_LOGIN}
