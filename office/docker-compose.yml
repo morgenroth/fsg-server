@@ -11,3 +11,15 @@ services:
     environment:
      - CUPS_ADMIN=${CUPS_USER}
      - CUPS_PASSWD=${CUPS_PASSWORD}
+  asterisk:
+    build: asterisk
+    restart: always
+    volumes:
+     - /data/asterisk:/etc/asterisk:ro
+    networks:
+      manage:
+        ipv4_address: 10.10.3.13
+
+networks:
+  manage:
+    external: true
