@@ -48,6 +48,7 @@ services:
      - /data/nginx/sites:/etc/nginx/conf.d:ro
      - /data/nginx/logs:/var/log:rw
      - /data/web:/data/sites
+     - /data/munin/www/:/data/munin:ro
     links:
      - mysql:mysql
      - jenkins:jenkins
@@ -84,6 +85,15 @@ services:
       manage:
         ipv4_address: 10.10.3.11
       default:
+  munin:
+    build: munin
+    restart: always
+    volumes:
+     - /data/munin/logs:/var/log/munin
+     - /data/munin/db:/var/lib/munin
+     - /data/munin/pid:/var/run/munin
+     - /data/munin/www:/var/www/munin
+     - /data/munin/etc:/etc/munin
 
 networks:
   default:
