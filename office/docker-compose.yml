@@ -19,6 +19,16 @@ services:
     networks:
       manage:
         ipv4_address: 10.10.3.13
+  mumble:
+    build: murmur
+    restart: always
+    volumes:
+     - /data/murmur:/data
+    ports:
+     - 10.10.10.10:64738:64738/tcp
+     - 10.10.10.10:64738:64738/udp
+     - ${PUBLIC_IP}:64738:64738/tcp
+     - ${PUBLIC_IP}:64738:64738/udp
 
 networks:
   manage:
