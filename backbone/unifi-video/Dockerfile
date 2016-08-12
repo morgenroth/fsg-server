@@ -1,5 +1,5 @@
 # derived from latest ubuntu
-FROM ubuntu:14.04
+FROM ubuntu:latest
 ENV DEBIAN_FRONTEND noninteractive
 
 # Add Tini
@@ -9,7 +9,16 @@ RUN chmod +x /tini
 ENTRYPOINT ["/tini", "--"]
 
 # install dependencies
-RUN apt-get -qq update && apt-get install -yqq adduser sudo psmisc lsb-release mongodb-server default-jre-headless jsvc
+RUN apt-get -qq update && apt-get install -yqq adduser sudo psmisc lsb-release mongodb-server default-jre-headless jsvc software-properties-common 
+
+# Install Java.
+RUN \
+  echo oracle-java7-installer shared/accepted-oracle-license-v1-1 select true | debconf-set-selections && \
+  add-apt-repository -y ppa:webupd8team/java && \
+  apt-get update && \
+  apt-get install -y oracle-java7-installer && \
+  rm -rf /var/lib/apt/lists/* && \
+  rm -rf /var/cache/oracle-jdk7-installer
 
 # add unifi and mongo repo
 ADD http://dl.ubnt.com/firmwares/unifi-video/3.3.0/unifi-video_3.3.0~Debian7_amd64.deb unifi-video_3.3.0~Debian7_amd64.deb
@@ -29,9 +38,7 @@ RUN apt-get upgrade -yqq && \
 ADD ./unifi-video.default /etc/default/unifi-video
 RUN mkdir -p /var/run/unifi-video; chown unifi-video:unifi-video /var/run/unifi-video
 
-# start unifi-video
-EXPOSE 7447 7446 7445 7443 7080 6666
-ENV JAVA_HOME=/usr/lib/jvm/java-7-openjdk-amd64/jre
+ENV JAVA_HOME /usr/lib/jvm/java-7-oracle
 WORKDIR /usr/lib/unifi-video
 USER unifi-video
 
