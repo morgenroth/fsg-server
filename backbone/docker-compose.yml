@@ -53,6 +53,7 @@ services:
      - mysql:mysql
      - jenkins:jenkins
      - unifi:unifi
+     - video:video
   mail:
     image: lits/docker-mail-relay
     restart: always
@@ -84,6 +85,15 @@ services:
     networks:
       manage:
         ipv4_address: 10.10.3.11
+      default:
+  video:
+    build: unifi-video
+    restart: always
+    volumes:
+     - /data/unifi-video:/usr/lib/unifi-video
+    networks:
+      manage:
+        ipv4_address: 10.10.3.12
       default:
   munin:
     build: munin
