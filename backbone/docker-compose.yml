@@ -90,7 +90,7 @@ services:
     build: unifi-video
     restart: always
     volumes:
-     - /data/unifi-video:/usr/lib/unifi-video/data
+     - /data/unifi-video:/var/lib/unifi-video
     networks:
       manage:
         ipv4_address: 10.10.3.12
