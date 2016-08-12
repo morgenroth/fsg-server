@@ -8,3 +8,15 @@ services:
     ports:
      - 10.10.10.10:8080:8080/tcp
      - 10.10.10.10:9000:9000/tcp
+  video:
+    build: unifi-video
+    restart: always
+    volumes:
+     - /data/unifi-video:/usr/lib/unifi-video
+    networks:
+      manage:
+        ipv4_address: 10.10.3.12
+
+networks:
+  manage:
+    external: true
