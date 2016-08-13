@@ -49,6 +49,8 @@ services:
      - LOCAL=stella
      - DOMAIN=event.formulastudent.de
      - PASSWORD=${PROSODY_PASSWORD}
+     - DNS_SERVER=10.10.10.10
+     - DNS_DOMAIN=event.formulastudent.de
     networks:
       manage:
         ipv4_address: 10.10.3.14
