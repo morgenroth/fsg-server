@@ -30,6 +30,9 @@ services:
      - 10.10.1.10:69:69/udp
     volumes:
      - /data/tftpboot:/var/lib/tftpboot:ro
+  monitor:
+    build: monitor
+    restart: always
   mysql:
     image: mysql:5.5
     restart: always
@@ -54,6 +57,7 @@ services:
      - jenkins:jenkins
      - unifi:unifi
      - video:video
+     - monitor:monitor
   mail:
     image: lits/docker-mail-relay
     restart: always
