@@ -30,7 +30,7 @@ RUN apt-get upgrade -yqq && \
     rm -rf /usr/share/doc/*
 
 # Add Tini
-ENV TINI_VERSION v0.9.0
+ENV TINI_VERSION v0.13.2
 ADD https://github.com/krallin/tini/releases/download/${TINI_VERSION}/tini /tini
 RUN chmod +x /tini
 ENTRYPOINT ["/tini", "--"]
