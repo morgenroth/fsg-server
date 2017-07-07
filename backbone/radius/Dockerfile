@@ -27,5 +27,11 @@ RUN apt-get -qq update && \
     rm -rf /var/lib/apt/lists/* && \
     rm -rf /usr/share/doc/*
 
+# temp directory
+RUN mkdir /tmp/radiusd && chown freerad:freerad /tmp/radiusd
+
+# define a health check
+HEALTHCHECK CMD /data/radius-python/radtest.sh | grep "rad_recv: Access-Accept"
+
 # start radius server
 CMD ["/usr/sbin/freeradius", "-f"]
