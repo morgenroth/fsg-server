@@ -47,7 +47,7 @@ services:
      - ${PUBLIC_IP}:80:80/tcp
      - ${PUBLIC_IP}:443:443/tcp
     volumes:
-     - /data/nginx/ssl:/data/ssl:ro
+     - /etc/letsencrypt:/data/ssl:ro
      - /data/nginx/sites:/etc/nginx/conf.d:ro
      - /data/nginx/logs:/var/log:rw
      - /data/web:/data/sites
