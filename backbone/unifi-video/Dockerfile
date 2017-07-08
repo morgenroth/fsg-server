@@ -3,26 +3,22 @@ FROM ubuntu:latest
 ENV DEBIAN_FRONTEND noninteractive
 
 # Add Tini
-ENV TINI_VERSION v0.13.2
+ENV TINI_VERSION v0.14.0
 ADD https://github.com/krallin/tini/releases/download/${TINI_VERSION}/tini /tini
 RUN chmod +x /tini
 ENTRYPOINT ["/tini", "--"]
 
-# install dependencies
-RUN apt-get -qq update && apt-get install -yqq adduser sudo psmisc lsb-release mongodb-server default-jre-headless jsvc software-properties-common 
+# add unifi and mongo repo
+ADD ./100-ubnt.list /etc/apt/sources.list.d/100-ubnt.list
+RUN apt-key adv --keyserver keyserver.ubuntu.com --recv C0A52C50
+RUN apt-key adv --keyserver keyserver.ubuntu.com --recv 7F0CEB10
 
-# Install Java.
-RUN \
-  echo oracle-java7-installer shared/accepted-oracle-license-v1-1 select true | debconf-set-selections && \
-  add-apt-repository -y ppa:webupd8team/java && \
-  apt-get update && \
-  apt-get install -y oracle-java7-installer && \
-  rm -rf /var/lib/apt/lists/* && \
-  rm -rf /var/cache/oracle-jdk7-installer
+## install packages
+RUN apt-get -qq update && apt-get install -yqq mongodb-10gen jsvc sudo psmisc lsb-release openjdk-8-jre-headless
 
 # add unifi and mongo repo
-ADD http://dl.ubnt.com/firmwares/unifi-video/3.3.0/unifi-video_3.3.0~Debian7_amd64.deb unifi-video_3.3.0~Debian7_amd64.deb
-RUN dpkg -i unifi-video_3.3.0~Debian7_amd64.deb
+ADD https://dl.ubnt.com/firmwares/unifi-video/3.7.1/unifi-video_3.7.1~Ubuntu16.04_amd64.deb unifi-video_3.7.1~Ubuntu16.04_amd64.deb
+RUN dpkg -i unifi-video_3.7.1~Ubuntu16.04_amd64.deb; apt-get install -fy
 
 # finally clean the container
 RUN apt-get upgrade -yqq && \
@@ -38,8 +34,11 @@ RUN apt-get upgrade -yqq && \
 ADD ./unifi-video.default /etc/default/unifi-video
 RUN mkdir -p /var/run/unifi-video; chown unifi-video:unifi-video /var/run/unifi-video
 
-ENV JAVA_HOME /usr/lib/jvm/java-7-oracle
+# start unifi-video
+EXPOSE 7447 7446 7445 7443 7080 6666
+ENV JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64/jre
 WORKDIR /usr/lib/unifi-video
 USER unifi-video
 
-CMD ["java", "-cp", "/usr/share/java/commons-daemon.jar:/usr/lib/unifi-video/lib/airvision.jar", "-Djava.secury.egd=file:/dev/./urandom", "-Xmx1024M", "-Djava.library.path=/usr/lib/unifi-video/lib", "-Djava.awt.headless=true", "-Dfile.encoding=UTF-8", "com.ubnt.airvision.Main", "start"]
+#
+CMD ["java", "-cp", "/usr/share/java/commons-daemon.jar:/usr/lib/unifi-video/lib/airvision.jar", "-Dav.tempdir=/var/cache/unifi-video", "-Djava.security.egd=file:/dev/urandom", "-Djava.library.path=/usr/lib/unifi-video/lib", "-Djava.awt.headless=true", "-Djavax.net.ssl.trustStore=/usr/lib/unifi-video/data/ufv-truststore", "-Dfile.encoding=UTF-8", "-Xmx8349M", "com.ubnt.airvision.Main", "start"]
