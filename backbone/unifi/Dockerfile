@@ -1,5 +1,5 @@
 # derived from latest debian
-FROM debian:latest
+FROM debian:jessie
 ENV DEBIAN_FRONTEND noninteractive
 
 # Add Tini
