@@ -58,6 +58,7 @@ services:
      - unifi:unifi
      - video:video
      - monitor:monitor
+     - mqtt:mqtt
   mail:
     image: lits/docker-mail-relay
     restart: always
@@ -109,6 +110,15 @@ services:
      - /data/munin/pid:/var/run/munin
      - /data/munin/www:/var/www/munin
      - /data/munin/etc:/etc/munin
+  mqtt:
+    image: eclipse-mosquitto
+    restart: always
+    volumes:
+     - /data/mosquitto:/mosquitto:rw
+    networks:
+      manage:
+        ipv4_address: 10.10.3.15
+      default:
 
 networks:
   default:
