@@ -30,10 +30,9 @@ services:
      - ${PUBLIC_IP}:64738:64738/tcp
      - ${PUBLIC_IP}:64738:64738/udp
   prosody:
-    build: prosody-docker
+    build: prosody
     restart: always
     volumes:
-     - /data/nginx/ssl:/data/certs:ro
      - /data/prosody/etc:/etc/prosody:ro
      - /data/prosody/logs:/var/log/prosody:rw
      - /data/prosody/modules:/usr/lib/prosody-modules:ro
@@ -45,6 +44,7 @@ services:
      - 10.10.10.10:5222:5222/tcp
      - 10.10.10.10:5280:5280/tcp
      - 10.10.10.10:5281:5281/tcp
+     - 10.10.10.10:5269:5269/tcp
     environment:
      - LOCAL=stella
      - DOMAIN=event.formulastudent.de
