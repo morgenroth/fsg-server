@@ -8,7 +8,10 @@ RUN chmod +x /tini
 ENTRYPOINT ["/tini", "--"]
 
 # install packages
-RUN apt-get update && apt-get install --force-yes -y python-mysqldb
+RUN apt-get update && apt-get install --force-yes -y python-mysqldb python-pip
+
+# install sleekxmpp
+RUN pip install sleekxmpp dnspython
 
 # finally clean the container
 RUN apt-get update && \
