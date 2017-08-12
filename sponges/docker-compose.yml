@@ -25,4 +25,19 @@ services:
     restart: always
     network_mode: host
     command: /usr/local/sbin/arpsponge --verbose 10.105.0.0/16 dev vlan105
+  sponge-staff:
+    build: arpsponge
+    restart: always
+    network_mode: host
+    command: /usr/local/sbin/arpsponge --verbose 10.112.0.0/16 dev vlan102
+  sponge-guest:
+    build: arpsponge
+    restart: always
+    network_mode: host
+    command: /usr/local/sbin/arpsponge --verbose 10.113.0.0/16 dev vlan103
+  sponge-sponsors:
+    build: arpsponge
+    restart: always
+    network_mode: host
+    command: /usr/local/sbin/arpsponge --verbose 10.114.0.0/16 dev vlan104
 
