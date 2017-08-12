@@ -44,8 +44,10 @@ services:
     ports:
      - 10.10.10.10:80:80/tcp
      - 10.10.10.10:443:443/tcp
+     - 10.10.10.10:7446:7446/tcp
      - ${PUBLIC_IP}:80:80/tcp
      - ${PUBLIC_IP}:443:443/tcp
+     - ${PUBLIC_IP}:7446:7446/tcp
     volumes:
      - /etc/letsencrypt:/data/ssl:ro
      - /data/nginx/sites:/etc/nginx/conf.d:ro
