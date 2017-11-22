@@ -42,15 +42,14 @@ services:
      - /data/prosody/etc:/etc/prosody:ro
      - /data/prosody/logs:/var/log/prosody:rw
      - /data/prosody/modules:/usr/lib/prosody-modules:ro
+     - /data/prosody/data:/var/lib/prosody:rw
     ports:
-     - ${PUBLIC_IP}:5222:5222/tcp
-     - ${PUBLIC_IP}:5280:5280/tcp
-     - ${PUBLIC_IP}:5281:5281/tcp
-     - ${PUBLIC_IP}:5269:5269/tcp
-     - 10.10.10.10:5222:5222/tcp
-     - 10.10.10.10:5280:5280/tcp
-     - 10.10.10.10:5281:5281/tcp
-     - 10.10.10.10:5269:5269/tcp
+     - 10.100.1.10:5222:5222/tcp
+     - 10.100.1.10:5280:5280/tcp
+     - 10.100.1.10:5281:5281/tcp
+     - 10.100.1.10:5269:5269/tcp
+    cap_add:
+     - NET_BIND_SERVICE
     environment:
      - LOCAL=stella
      - DOMAIN=event.formulastudent.de
@@ -60,6 +59,8 @@ services:
     networks:
       manage:
         ipv4_address: 10.10.3.14
+      dmz:
+        ipv6_address: 2001:470:7090:ff64:1::14
 
 networks:
   manage:
