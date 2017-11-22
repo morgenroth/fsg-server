@@ -19,6 +19,8 @@ services:
     networks:
       manage:
         ipv4_address: 10.10.3.13
+      dmz:
+        ipv6_address: 2001:470:7090:ff64:1::13
   mumble:
     build: murmur
     restart: always
