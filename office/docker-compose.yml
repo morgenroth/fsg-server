@@ -24,19 +24,17 @@ services:
     restart: always
     volumes:
      - /data/murmur:/data
+     - /etc/letsencrypt:/data/ssl:ro
+     - /data/nginx/sites-mumble:/etc/nginx/sites-enabled:ro
+     - /data/web/mumble-web/dist:/var/www:ro
     ports:
-     - 10.10.10.10:64838:64838/tcp
-     - 10.10.10.10:64838:64838/udp
-     - ${PUBLIC_IP}:64838:64838/tcp
-     - ${PUBLIC_IP}:64838:64838/udp
-  mumble-web:
-    build: mumble-web
-    restart: always
-    ports:
-     - 10.10.10.10:64837:64837/tcp
-     - ${PUBLIC_IP}:64837:64837/tcp
-    links:
-     - mumble
+     - 10.100.1.10:64738:64738/tcp
+     - 10.100.1.10:64738:64738/udp
+    networks:
+      manage:
+        ipv4_address: 10.10.3.16
+      dmz:
+        ipv6_address: 2001:470:7090:ff64:1::16
   prosody:
     build: prosody
     restart: always
@@ -65,4 +63,6 @@ services:
 
 networks:
   manage:
+    external: true
+  dmz:
     external: true
