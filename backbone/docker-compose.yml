@@ -33,6 +33,15 @@ services:
   monitor:
     build: monitor
     restart: always
+    links:
+      - mysql:mysql
+      - mqtt:mqtt
+  monitor-bot:
+    build: monitor
+    restart: always
+    links:
+      - mqtt:mqtt
+    command: "/usr/bin/python bot.py"
   mysql:
     image: mysql:5.5
     restart: always
@@ -42,12 +51,9 @@ services:
     build: nginx
     restart: always
     ports:
-     - 10.10.10.10:80:80/tcp
-     - 10.10.10.10:443:443/tcp
-     - 10.10.10.10:7446:7446/tcp
-     - ${PUBLIC_IP}:80:80/tcp
-     - ${PUBLIC_IP}:443:443/tcp
-     - ${PUBLIC_IP}:7446:7446/tcp
+     - 10.100.1.10:80:80/tcp
+     - 10.100.1.10:443:443/tcp
+     - 10.100.1.10:7446:7446/tcp
     volumes:
      - /etc/letsencrypt:/data/ssl:ro
      - /data/nginx/sites:/etc/nginx/conf.d:ro
@@ -61,6 +67,10 @@ services:
      - video:video
      - monitor:monitor
      - mqtt:mqtt
+    networks:
+      default:
+      dmz:
+        ipv6_address: 2001:470:7090:ff64:1::10
   mail:
     image: lits/docker-mail-relay
     restart: always
@@ -126,4 +136,6 @@ networks:
   default:
     driver: bridge
   manage:
+    external: true
+  dmz:
     external: true
