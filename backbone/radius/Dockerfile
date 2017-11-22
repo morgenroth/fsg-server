@@ -2,13 +2,13 @@
 FROM debian:latest
 
 # Add Tini
-ENV TINI_VERSION v0.13.2
+ENV TINI_VERSION v0.16.1
 ADD https://github.com/krallin/tini/releases/download/${TINI_VERSION}/tini /tini
 RUN chmod +x /tini
 ENTRYPOINT ["/tini", "--"]
 
 # install packages
-RUN apt-get -qq update && DEBIAN_FRONTEND=noninteractive apt-get install -yqq ca-certificates ssl-cert freeradius
+RUN apt-get -qq update && DEBIAN_FRONTEND=noninteractive apt-get install -yqq ca-certificates ssl-cert freeradius make
 
 # install radius plugins support
 RUN DEBIAN_FRONTEND=noninteractive apt-get install -yqq freeradius-ldap freeradius-mysql
